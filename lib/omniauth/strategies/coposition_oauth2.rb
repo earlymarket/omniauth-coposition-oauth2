@@ -16,9 +16,9 @@ module OmniAuth
 
 
       option :client_options, {
-        site: "http://coposition.dev:5000",
-        authorize_url: "http://coposition.dev:5000/oauth/authorize",
-        token_url: "http://coposition.dev:5000/oauth/token"
+        site: "http://coposition-dev.com:5000",
+        authorize_url: "http://coposition-dev.com/oauth/authorize",
+        token_url: "http://coposition-dev.com/oauth/token"
       }
 
       def request_phase
