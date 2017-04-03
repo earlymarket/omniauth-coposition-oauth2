@@ -2,7 +2,7 @@ require "omniauth-oauth2"
 
 module OmniAuth  
   module Strategies
-    class Coposition < OmniAuth::Strategies::OAuth2
+    class CopositionOauth2 < OmniAuth::Strategies::OAuth2
       include OmniAuth::Strategy
 
       option :client_options, {
