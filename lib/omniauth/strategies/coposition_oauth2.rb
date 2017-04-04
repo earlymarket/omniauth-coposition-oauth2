@@ -5,10 +5,12 @@ module OmniAuth
     class CopositionOauth2 < OmniAuth::Strategies::OAuth2
       include OmniAuth::Strategy
 
+      PROVIDER_URL = "http://coposition-dev.com:5000"
+
       option :name, "coposition_oauth2"
-      option :skip_friends, true
-      option :skip_image_info, true
-      option :skip_jwt, true
+      # option :skip_friends, true
+      # option :skip_image_info, true
+      # option :skip_jwt, true
       # option :authorize_options, [
       #   :access_type, :hd, :login_hint, :prompt, :request_visible_actions,
       #   :scope, :state, :redirect_uri, :include_granted_scopes, :openid_realm
@@ -16,9 +18,9 @@ module OmniAuth
 
 
       option :client_options, {
-        site: "http://coposition-dev.com:5000",
-        authorize_url: "http://coposition-dev.com:5000/oauth/authorize",
-        token_url: "http://coposition-dev.com:5000/oauth/token"
+        site: PROVIDER_URL,
+        authorize_url: "#{PROVIDER_URL}/oauth/authorize",
+        token_url: "#{PROVIDER_URL}/oauth/token"
       }
 
       def request_phase
@@ -32,8 +34,7 @@ module OmniAuth
       uid { raw_info["id"] }
 
       def raw_info
-        @raw_info ||= 
-          access_token.get("/api/users/me").parsed
+        @raw_info ||= access_token.get("/api/users/me").parsed
       end
     end
   end
