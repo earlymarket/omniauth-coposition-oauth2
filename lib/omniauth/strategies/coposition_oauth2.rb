@@ -5,7 +5,9 @@ module OmniAuth
     class CopositionOauth2 < OmniAuth::Strategies::OAuth2
       include OmniAuth::Strategy
 
-      PROVIDER_URL = "http://coposition-dev.com:5000"
+      BASE_HOST = "coposition-dev.com:5000"
+      PROVIDER_URL = "http://#{BASE_HOST}"
+      INFO_URL = "http://api.#{BASE_HOST}"
 
       option :name, "coposition_oauth2"
       # option :skip_friends, true
@@ -15,7 +17,6 @@ module OmniAuth
       #   :access_type, :hd, :login_hint, :prompt, :request_visible_actions,
       #   :scope, :state, :redirect_uri, :include_granted_scopes, :openid_realm
       # ]
-
 
       option :client_options, {
         site: PROVIDER_URL,
@@ -34,7 +35,7 @@ module OmniAuth
       uid { raw_info["id"] }
 
       def raw_info
-        @raw_info ||= access_token.get("/users/me").parsed
+        @raw_info ||= access_token.get("#{INFO_URL}/users/me").parsed
       end
     end
   end
