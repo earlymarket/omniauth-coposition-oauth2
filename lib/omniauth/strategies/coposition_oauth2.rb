@@ -5,7 +5,7 @@ module OmniAuth
     class CopositionOauth2 < OmniAuth::Strategies::OAuth2
       include OmniAuth::Strategy
 
-      PROVIDER_URL = "http://coposition-dev.com:5000"
+      PROVIDER_URL = "https://coposition.com"
 
       option :name, "coposition_oauth2"
       # option :skip_friends, true
