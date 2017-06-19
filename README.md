@@ -22,7 +22,25 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+BUILD
+
+When building a new gem version, make sure that PROVIDER_URL corresponds to your current oauth server address. Also make sure all other strategy options are tuned up properly.
+
+RELEASE
+
+When developer wants to use Coposition as an omniauth provider, he should go through following steps:
+1. Register developer account on Coposition (https://coposition.com). Corresponding oauth application will be created automatically.
+2. Add this gem as a dependency to third party application.
+3. Within new initializer add new omniauth provider with following settings:
+
+```
+provider :coposition_oauth2,
+  ENV["COPOSITION_CLIENT_ID"],
+  ENV["COPOSITION_CLIENT_SECRET"],
+```
+We recommend using env vars here for security reasons.
+4. Values for COPOSITION_CLIENT_ID and COPOSITION_CLIENT_SECRET should be copied from oauth application details on Coposition side.
+5. Add link inviting to sign via Coposition (`omniauth_coposition_path` helper) into application pages.
 
 ## Development
 
