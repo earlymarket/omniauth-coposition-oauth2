@@ -31,7 +31,7 @@ RELEASE
 When developer wants to use Coposition as an omniauth provider, he should go through following steps:
 1. Register developer account on Coposition (https://coposition.com). Corresponding oauth application will be created automatically.
 2. Add this gem as a dependency to third party application.
-3. Within new initializer add new omniauth provider with following settings:
+3. Within new initializer (Rails project initializer, name does not matter) add new omniauth provider with following settings:
 
 ```
 provider :coposition_oauth2,
@@ -39,8 +39,16 @@ provider :coposition_oauth2,
   ENV["COPOSITION_CLIENT_SECRET"],
 ```
 We recommend using env vars here for security reasons.
-4. Values for COPOSITION_CLIENT_ID and COPOSITION_CLIENT_SECRET should be copied from oauth application details on Coposition side.
-5. Add link inviting to sign via Coposition (`omniauth_coposition_path` helper) into application pages.
+4. Values for COPOSITION_CLIENT_ID and COPOSITION_CLIENT_SECRET should be copied from oauth application details on Coposition side (go to /oauth/applications/:application_id and copy values from this page).
+5. Add callback route to your application. It will triggered by oauth server after successfull authentication from third party app side. For example:
+```
+get "/auth/:provider/callback", to: "sessions#create"
+```
+6. Finally, add link inviting to sign via Coposition (`omniauth_coposition_path` helper) into application pages. It could look like this (with slim templates):
+```
+= button_to(omniauth_coposition_path, class: "bonus__sign-in btn green") do
+  | Sign in with Coposition
+```
 
 ## Development
 
