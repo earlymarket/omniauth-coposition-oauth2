@@ -49,6 +49,17 @@ get "/auth/:provider/callback", to: "sessions#create"
 = button_to(omniauth_coposition_path, class: "bonus__sign-in btn green") do
   | Sign in with Coposition
 ```
+But it means you'll have to add helper like this:
+```
+def omniauth_coposition_path
+  path_params = { path: "/auth/coposition_oauth2" }
+
+  URI::HTTP.build(path_params).request_uri
+end
+```
+Or you can use "/auth/coposition_oauth2" directly.
+
+Please, not that included redirect_uri should match the one you previously added as a oauth application param. This should be valid url which means that 'localhost' won't work and should be replaced with 'lvh.me' or something like that.
 
 ## Development
 
