@@ -22,15 +22,18 @@ Or install it yourself as:
 
 ## Usage
 
-BUILD
+#### BUILD
 
 When building a new gem version, make sure that PROVIDER_URL corresponds to your current oauth server address. Also make sure all other strategy options are tuned up properly.
 
-RELEASE
+#### RELEASE
 
 When developer wants to use Coposition as an omniauth provider, he should go through following steps:
+
 1. Register developer account on Coposition (https://coposition.com). Corresponding oauth application will be created automatically.
+
 2. Add this gem as a dependency to third party application.
+
 3. Within new initializer (Rails project initializer, name does not matter) add new omniauth provider with following settings:
 
 ```
@@ -39,11 +42,14 @@ provider :coposition_oauth2,
   ENV["COPOSITION_CLIENT_SECRET"],
 ```
 We recommend using env vars here for security reasons.
+
 4. Values for COPOSITION_CLIENT_ID and COPOSITION_CLIENT_SECRET should be copied from oauth application details on Coposition side (go to /oauth/applications/:application_id and copy values from this page).
+
 5. Add callback route to your application. It will triggered by oauth server after successfull authentication from third party app side. For example:
 ```
 get "/auth/:provider/callback", to: "sessions#create"
 ```
+
 6. Finally, add link inviting to sign via Coposition (`omniauth_coposition_path` helper) into application pages. It could look like this (with slim templates):
 ```
 = button_to(omniauth_coposition_path, class: "bonus__sign-in btn green") do
@@ -58,8 +64,20 @@ def omniauth_coposition_path
 end
 ```
 Or you can use "/auth/coposition_oauth2" directly.
-
 Please, not that included redirect_uri should match the one you previously added as a oauth application param. This should be valid url which means that 'localhost' won't work and should be replaced with 'lvh.me' or something like that.
+
+7. For Rails apps hash with authentication data is returned to callback route within `request.env["omniauth.auth"]`
+Within a strategy we define what data will be included using following blocks:
+```
+info do
+  raw_info.merge("token" => access_token.token)
+end
+```
+and
+```
+uid { raw_info["id"] }
+```
+And 3rd party application can extract this data calling corresponding methods (like `info` and `uid`) on received authentication hash.
 
 ## Development
 
@@ -75,4 +93,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
