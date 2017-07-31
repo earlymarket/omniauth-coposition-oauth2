@@ -79,6 +79,14 @@ uid { raw_info["id"] }
 ```
 And 3rd party application can extract this data calling corresponding methods (like `info` and `uid`) on received authentication hash.
 
+#### REVOKE
+
+To revoke an existing access token, post to https://coposition.com/oauth/revoke with a body containing a hash of your client_id, client_secret and the acess token.
+```
+{ 'client_id': CLIENT_UID, 'client_secret': CLIENT_SECRET, 'token': ACCESS_TOKEN }
+```
+
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
