@@ -1,8 +1,6 @@
 # Omniauth::Coposition::Oauth2
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/omniauth/coposition/oauth2`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem allows you to quickly and easily integrate the Coposition into your website, allowing your users to authorize your application to access their Coposition data. Follow the Installation and Usage guide to get started.
 
 ## Installation
 
@@ -21,12 +19,6 @@ Or install it yourself as:
     $ gem install omniauth-coposition-oauth2
 
 ## Usage
-
-#### BUILD
-
-When building a new gem version, make sure that PROVIDER_URL corresponds to your current oauth server address. Also make sure all other strategy options are tuned up properly.
-
-#### RELEASE
 
 When developer wants to use Coposition as an omniauth provider, he should go through following steps:
 
