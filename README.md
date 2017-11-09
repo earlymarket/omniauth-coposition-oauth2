@@ -20,13 +20,12 @@ Or install it yourself as:
 
 ## Usage
 
-When developer wants to use Coposition as an omniauth provider, he should go through following steps:
 
-1. Register developer account on Coposition (https://coposition.com). Corresponding oauth application will be created automatically.
+1. Register a developer account on Coposition (https://coposition.com). A corresponding oauth application will be created automatically.
 
-2. Add this gem as a dependency to third party application.
+2. Add this gem as a dependency to your third party application.
 
-3. Within new initializer (Rails project initializer, name does not matter) add new omniauth provider with following settings:
+3. Within a new initializer, add a new omniauth provider with following settings:
 
 ```
 provider :coposition_oauth2,
@@ -35,19 +34,19 @@ provider :coposition_oauth2,
 ```
 We recommend using env vars here for security reasons.
 
-4. Values for COPOSITION_CLIENT_ID and COPOSITION_CLIENT_SECRET should be copied from oauth application details on Coposition side (go to /oauth/applications/:application_id and copy values from this page).
+4. Values for COPOSITION_CLIENT_ID and COPOSITION_CLIENT_SECRET can be found on your Coposition developer console. (https://coposition.com/developers)
 
-5. Add callback route to your application. It will triggered by oauth server after successfull authentication from third party app side. For example:
+5. Add callback route to your application. It will triggered by oauth server after a user authenticates your app. For example:
 ```
 get "/auth/:provider/callback", to: "sessions#create"
 ```
 
-6. Finally, add link inviting to sign via Coposition (`omniauth_coposition_path` helper) into application pages. It could look like this (with slim templates):
+6. Finally, add a link inviting users to authenticate via Coposition (`omniauth_coposition_path` helper) into application pages. It could look like this (with slim templates):
 ```
 = button_to(omniauth_coposition_path, class: "bonus__sign-in btn green") do
-  | Sign in with Coposition
+  | Authenticate with Coposition
 ```
-But it means you'll have to add helper like this:
+With a helper like this:
 ```
 def omniauth_coposition_path
   path_params = { path: "/auth/coposition_oauth2" }
@@ -56,20 +55,11 @@ def omniauth_coposition_path
 end
 ```
 Or you can use "/auth/coposition_oauth2" directly.
-Please, not that included redirect_uri should match the one you previously added as a oauth application param. This should be valid url which means that 'localhost' won't work and should be replaced with 'lvh.me' or something like that.
+Please note that included redirect_uri should match the one you previously added as a oauth application param. This should be valid url which means that 'localhost' won't work and should be replaced with a working url.
 
-7. For Rails apps hash with authentication data is returned to callback route within `request.env["omniauth.auth"]`
-Within a strategy we define what data will be included using following blocks:
-```
-info do
-  raw_info.merge("token" => access_token.token)
-end
-```
-and
-```
-uid { raw_info["id"] }
-```
-And 3rd party application can extract this data calling corresponding methods (like `info` and `uid`) on received authentication hash.
+7. A hash with authentication data is returned to callback route specified `request.env["omniauth.auth"]`
+
+You can then access the access token and user info returned by calling methods `info` and `uid` on the hash.
 
 #### REVOKE
 
