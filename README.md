@@ -23,7 +23,7 @@ Or install it yourself as:
 
 1. Register a developer account on Coposition (https://coposition.com). A corresponding oauth application will be created automatically.
 
-2. Add this gem as a dependency to your third party application.
+2. Add this gem as a dependency to your application.
 
 3. Within a new initializer, add a new omniauth provider with following settings:
 
