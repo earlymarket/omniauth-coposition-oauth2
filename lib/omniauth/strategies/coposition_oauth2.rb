@@ -33,7 +33,7 @@ module OmniAuth
       uid { raw_info["id"] }
 
       def raw_info
-        @raw_info ||= access_token.get("#{PROVIDER_URL}/users/me").parsed
+        @raw_info ||= access_token["user"]
       end
     end
   end
